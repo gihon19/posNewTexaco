@@ -800,7 +800,7 @@ switch(e.getKeyCode()){
 							AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierre.idUltimoRequistro);
 							
 							//AbstractJasperReports.showViewer(view);
-							AbstractJasperReports.imprimierFactura();
+							//AbstractJasperReports.imprimierFactura();
 							AbstractJasperReports.showViewer(view);
 							
 							
@@ -825,6 +825,14 @@ switch(e.getKeyCode()){
 		else{//si la facturacion es sencilla test
 			
 			//comprobamos conexion remota
+			
+			
+			
+			
+			
+			
+			
+			
 			//if(conexion.getConnectionStatus()){
 				
 				CierreCajaDao cierreRemote=new CierreCajaDao(conexionRemote);
@@ -845,8 +853,8 @@ switch(e.getKeyCode()){
 								AbstractJasperReports.createReport(conexionRemote.getPoolConexion().getConnection(), 4, cierreRemote.idUltimoRequistro);
 								
 								//AbstractJasperReports.imprimierFactura();
-								AbstractJasperReports.Imprimir2();
-								//AbstractJasperReports.showViewer(view);
+								//AbstractJasperReports.Imprimir2();
+								AbstractJasperReports.showViewer(view);
 								
 								
 								viewContar.dispose();
