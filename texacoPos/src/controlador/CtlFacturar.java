@@ -824,7 +824,7 @@ switch(e.getKeyCode()){
 		}
 		else{//si la facturacion es sencilla test
 			
-			//comprobamos conexion remota
+			
 			
 			
 			
@@ -835,8 +835,17 @@ switch(e.getKeyCode()){
 			
 			//if(conexion.getConnectionStatus()){
 				
-				CierreCajaDao cierreRemote=new CierreCajaDao(conexionRemote);
+				
+				
 				CierreCajaDao cierre=new CierreCajaDao(conexion);
+				
+				if(cierre.verificarCierre()){//cierre local
+					cierre.actualizarCierre(new BigDecimal(0));
+				}
+				
+				//comprobamos conexion remota
+				CierreCajaDao cierreRemote=new CierreCajaDao(conexionRemote);
+				
 				// se verifica que hay facturas para crear un cierre
 				if(cierreRemote.verificarCierre()){
 					
@@ -847,7 +856,7 @@ switch(e.getKeyCode()){
 					if(ctlContar.getEstado())//verifica que se ordeno realizar el cierre
 						if(cierreRemote.actualizarCierre(ctlContar.getTotal()))
 						{
-							cierre.actualizarCierre(new BigDecimal(0));
+							
 							try {
 								//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
 								AbstractJasperReports.createReport(conexionRemote.getPoolConexion().getConnection(), 4, cierreRemote.idUltimoRequistro);
