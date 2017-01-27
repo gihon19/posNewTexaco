@@ -801,6 +801,7 @@ switch(e.getKeyCode()){
 							
 							//AbstractJasperReports.showViewer(view);
 							//AbstractJasperReports.imprimierFactura();
+							AbstractJasperReports.Imprimir2();
 							AbstractJasperReports.showViewer(view);
 							
 							
@@ -862,7 +863,7 @@ switch(e.getKeyCode()){
 								AbstractJasperReports.createReport(conexionRemote.getPoolConexion().getConnection(), 4, cierreRemote.idUltimoRequistro);
 								
 								//AbstractJasperReports.imprimierFactura();
-								//AbstractJasperReports.Imprimir2();
+								AbstractJasperReports.Imprimir2();
 								AbstractJasperReports.showViewer(view);
 								
 								
