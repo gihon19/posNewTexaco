@@ -779,7 +779,7 @@ switch(e.getKeyCode()){
 		
 		
 		
-		conexion.setNivelFac(false);
+		/*conexion.setNivelFac(false);
 		
 		if(conexion.getNivelFact())//nivel facturacion 2 admin_tools
 		{
@@ -824,7 +824,7 @@ switch(e.getKeyCode()){
 			}
 		}
 		else{//si la facturacion es sencilla test
-			
+		*/	
 			
 			
 			
@@ -838,14 +838,14 @@ switch(e.getKeyCode()){
 				
 				
 				
-				CierreCajaDao cierre=new CierreCajaDao(conexion);
+				//CierreCajaDao cierre=new CierreCajaDao(conexion);
 				
-				if(cierre.verificarCierre()){//cierre local
-					cierre.actualizarCierre(new BigDecimal(0));
-				}
+				//if(cierre.verificarCierre()){//cierre local
+					//cierre.actualizarCierre(new BigDecimal(0));
+				//}
 				
 				//comprobamos conexion remota
-				CierreCajaDao cierreRemote=new CierreCajaDao(conexionRemote);
+				CierreCajaDao cierreRemote=new CierreCajaDao(this.conexionRemote);
 				
 				// se verifica que hay facturas para crear un cierre
 				if(cierreRemote.verificarCierre()){
@@ -864,7 +864,7 @@ switch(e.getKeyCode()){
 								
 								//AbstractJasperReports.imprimierFactura();
 								AbstractJasperReports.Imprimir2();
-								AbstractJasperReports.showViewer(view);
+								//AbstractJasperReports.showViewer(view);
 								
 								
 								viewContar.dispose();
@@ -879,7 +879,7 @@ switch(e.getKeyCode()){
 						}else{
 							JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
 						}
-						}//fin de la verificacion de las facturas 
+				}//fin de la verificacion de las facturas 
 				else{
 					JOptionPane.showMessageDialog(view, "No hay facturas para crear un cierre de caja. Primero debe facturar.");
 				}
@@ -888,7 +888,7 @@ switch(e.getKeyCode()){
 			//	JOptionPane.showMessageDialog(view, "Problema con la conexion a internet");
 			//}
 			
-		}//fin nivel de facturacion
+	//	}//fin nivel de facturacion
 		
 		conexion.setNivelFac(true);
 	}
@@ -1114,7 +1114,7 @@ switch(e.getKeyCode()){
 						if(conexion.getNivelFact())//nivel facturacion dei
 						{
 							//factura SI dei
-							this.setCierre(conexion);
+							this.setCierre(conexionRemote);
 							//this.guardarLocal();
 							
 							
@@ -1533,35 +1533,32 @@ public void guardarRemoto(){//test
 
 	public void nuevaFactura() {
 		// TODO Auto-generated method stub
-		setCierre(this.conexion);
+		setCierre(this.conexionRemote);
 		view.getTxtBuscar().requestFocusInWindow();
 		view.setVisible(true);
 		
 	}
 	private boolean setCierre(Conexion conn){
 		/*seccion de cierre de caja*/
+/*seccion de cierre de caja*/
 		
 		boolean resul=true;
 		
 		CierreCajaDao cierreDao=new CierreCajaDao(conn);
-		CierreCaja myCierre=new CierreCaja();
 		
-		CierreCajaDao cierreDaoRemote=new CierreCajaDao(this.conexionRemote);
-		CierreCaja myCierreRemote=new CierreCaja();
+		CierreCaja myCierre=new CierreCaja();
 		
 		//se consiguie el ultimo cierre del usuario
 		 myCierre=cierreDao.getCierreUltimoUser();
-		 myCierreRemote=cierreDaoRemote.getCierreUltimoUser();
 		
 		
 		if(myCierre.getEstado()==false){//si el ultimo cierre esta inactivo se  registras el nuevo
 
 			//String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
 			ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
-			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conexion);
+			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conn);
 			
 			CierreCaja newCierre=new CierreCaja();
-			CierreCaja newCierre2=new CierreCaja();
 			/*if(entrada.trim().length()==0){
 				entrada="0.00";
 			}*/
@@ -1573,23 +1570,55 @@ public void guardarRemoto(){//test
 			newCierre.setNoCobroInicial(myCierre.getNoCobroFinal()+1);
 			cierreDao.registrarCierre(newCierre);
 			
-			
-			//otro
-			newCierre2.setEfectivoInicial(new BigDecimal(0));
-			newCierre2.setUsuario(conexion.getUsuarioLogin().getUser());
-			newCierre2.setNoFacturaInicio(myCierreRemote.getNoFacturaFinal()+1);//se estable la factura incial sumandole uno a la ultima factura realizada por el usuario
-			newCierre2.setNoSalidaInicial(myCierreRemote.getNoSalidaFinal()+1);//se estable la salida incial sumandole uno a la ultima salida realizada por el usuario
-			newCierre2.setNoCobroInicial(myCierreRemote.getNoCobroFinal()+1);
-			
-			cierreDaoRemote.registrarCierre(newCierre2);
-			
-			
 			viewContar.dispose();
 			viewContar=null;
 			ctlContar=null;
-		}
+			
+			
+			
+			
+			
+			
+			
+			/*//cierre local
+			
+			CierreCajaDao cierreDaoLocal=new CierreCajaDao(this.conexion);
+			
+			CierreCaja myCierreLocal=new CierreCaja();
+			
+			//se consiguie el ultimo cierre del usuario
+			myCierreLocal=cierreDaoLocal.getCierreUltimoUser();
+			
+			
+			if(myCierreLocal.getEstado()==false){//si el ultimo cierre esta inactivo se  registras el nuevo
+
+				//String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
+				ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
+				CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conn);
+				
+				CierreCaja newCierreLocal=new CierreCaja();
+				if(entrada.trim().length()==0){
+					entrada="0.00";
+				}
+				//newCierre.setEfectivoInicial(new BigDecimal(entrada));
+				newCierreLocal.setEfectivoInicial(new BigDecimal("0"));
+				newCierreLocal.setUsuario(conexion.getUsuarioLogin().getUser());
+				newCierreLocal.setNoFacturaInicio(myCierreLocal.getNoFacturaFinal()+1);//se estable la factura incial sumandole uno a la ultima factura realizada por el usuario
+				newCierreLocal.setNoSalidaInicial(myCierreLocal.getNoSalidaFinal()+1);//se estable la salida incial sumandole uno a la ultima salida realizada por el usuario
+				newCierreLocal.setNoCobroInicial(myCierreLocal.getNoCobroFinal()+1);
+				cierreDao.registrarCierre(newCierreLocal);
+				
+			}*/
+			
+			
+			
+		}//fin de nuevo cierre
+		
 		
 		return resul;
+		
+		
+	
 	}
 
 }
