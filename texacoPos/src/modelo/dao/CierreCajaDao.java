@@ -138,7 +138,7 @@ public class CierreCajaDao {
 		 		+ "where "
 		 		+ "idCierre=?";
 		 		//+ "
-			 if(unCierre!=null&&unCierre.getNoFacturaFinal()!=0){//OJO OJO OJO
+			 if(unCierre!=null&&unCierre.getNoFacturaFinal()!=0){
 				 try {
 					 	con = conexion.getPoolConexion().getConnection();
 						registrarCierre=con.prepareStatement(sql);

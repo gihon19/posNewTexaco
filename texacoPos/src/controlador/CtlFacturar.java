@@ -1193,6 +1193,7 @@ switch(e.getKeyCode()){
 				
 				
 				conexion.setNivelFac(true);
+				setEmptyView();
 		}//sin del if donde se pide el codigo del vendedor
 				
 					
@@ -1200,6 +1201,10 @@ switch(e.getKeyCode()){
 		else{
 			JOptionPane.showMessageDialog(view, "Para cobrar debe agregar articulos primero.");
 		}
+		
+		
+		
+		
 		
 	}
 	private void buscarArticulo(){
@@ -1340,7 +1345,7 @@ public void guardarLocal(){//admin_tools
 				}
 			//}//fin del nivel de factura
 			
-			setEmptyView();
+			//setEmptyView();
 			
 			
 		}else{
@@ -1388,7 +1393,7 @@ public void guardarRemoto(){//test
 						view.setVisible(false);
 					}
 					
-					setEmptyView();
+					//setEmptyView();
 					
 					//myFactura.
 				} catch (SQLException e) {
@@ -1538,13 +1543,13 @@ public void guardarRemoto(){//test
 		view.setVisible(true);
 		
 	}
-	private boolean setCierre(Conexion conn){
+	private boolean setCierre(Conexion dd){
 		/*seccion de cierre de caja*/
 /*seccion de cierre de caja*/
 		
 		boolean resul=true;
 		
-		CierreCajaDao cierreDao=new CierreCajaDao(conn);
+		CierreCajaDao cierreDao=new CierreCajaDao(this.conexionRemote);
 		
 		CierreCaja myCierre=new CierreCaja();
 		
@@ -1556,7 +1561,7 @@ public void guardarRemoto(){//test
 
 			//String entrada=JOptionPane.showInputDialog(view, "Ingrese la cantidad de efectivo inicial de la caja");
 			ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
-			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conn);
+			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conexionRemote);
 			
 			CierreCaja newCierre=new CierreCaja();
 			/*if(entrada.trim().length()==0){
